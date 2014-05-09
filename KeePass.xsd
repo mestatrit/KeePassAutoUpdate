@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="KeePassFile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="Meta" name="Meta" />
+				<xs:element type="Root" name="Root" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Meta">
+		<xs:sequence>
+			<xs:element type="xs:string" name="Generator" />
+			<xs:element type="xs:string" name="DatabaseName" />
+			<xs:element type="xs:dateTime" name="DatabaseNameChanged" />
+			<xs:element type="xs:string" name="DatabaseDescription" />
+			<xs:element type="xs:dateTime" name="DatabaseDescriptionChanged" />
+			<xs:element type="xs:string" name="DefaultUserName" />
+			<xs:element type="xs:dateTime" name="DefaultUserNameChanged" />
+			<xs:element type="xs:short" name="MaintenanceHistoryDays" />
+			<xs:element type="xs:string" name="Color" />
+			<xs:element type="xs:dateTime" name="MasterKeyChanged" />
+			<xs:element type="xs:byte" name="MasterKeyChangeRec" />
+			<xs:element type="xs:byte" name="MasterKeyChangeForce" />
+			<xs:element name="MemoryProtection">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element type="xs:string" name="ProtectTitle" />
+						<xs:element type="xs:string" name="ProtectUserName" />
+						<xs:element type="xs:string" name="ProtectPassword" />
+						<xs:element type="xs:string" name="ProtectURL" />
+						<xs:element type="xs:string" name="ProtectNotes" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CustomIcons">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Icon" maxOccurs="unbounded"
+							minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element type="xs:string" name="UUID" />
+									<xs:element type="xs:string" name="Data" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element type="xs:string" name="RecycleBinEnabled" />
+			<xs:element type="xs:string" name="RecycleBinUUID" />
+			<xs:element type="xs:dateTime" name="RecycleBinChanged" />
+			<xs:element type="xs:string" name="EntryTemplatesGroup" />
+			<xs:element type="xs:dateTime" name="EntryTemplatesGroupChanged" />
+			<xs:element type="xs:byte" name="HistoryMaxItems" />
+			<xs:element type="xs:int" name="HistoryMaxSize" />
+			<xs:element type="xs:string" name="LastSelectedGroup" />
+			<xs:element type="xs:string" name="LastTopVisibleGroup" />
+			<xs:element type="xs:string" name="Binaries" />
+			<xs:element type="xs:string" name="CustomData" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Root">
+		<xs:sequence>
+			<xs:element type="Group" name="Group" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element name="DeletedObjects">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DeletedObject" maxOccurs="unbounded"
+							minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element type="xs:string" name="UUID" />
+									<xs:element type="xs:dateTime" name="DeletionTime" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Group">
+		<xs:sequence>
+			<xs:element type="xs:string" name="UUID" />
+			<xs:element type="xs:string" name="Name" />
+			<xs:element type="xs:string" name="Notes" />
+			<xs:element type="xs:byte" name="IconID" />
+			<xs:element type="Times" name="Times" />
+			<xs:element type="xs:string" name="IsExpanded" />
+			<xs:element type="xs:string" name="DefaultAutoTypeSequence" />
+			<xs:element type="xs:string" name="EnableAutoType" />
+			<xs:element type="xs:string" name="EnableSearching" />
+			<xs:element type="xs:string" name="LastTopVisibleEntry" />
+			<xs:element type="Group" name="Group" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element type="Entry" name="Entry" maxOccurs="unbounded"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Entry">
+		<xs:sequence>
+			<xs:element type="xs:string" name="UUID" />
+			<xs:element type="xs:byte" name="IconID" />
+			<xs:element type="xs:string" name="CustomIconUUID" />
+			<xs:element type="xs:string" name="ForegroundColor" />
+			<xs:element type="xs:string" name="BackgroundColor" />
+			<xs:element type="xs:string" name="OverrideURL" />
+			<xs:element type="xs:string" name="Tags" />
+			<xs:element type="Times" name="Times" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="String" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element type="xs:string" name="Key" />
+						<xs:element name="Value">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute type="xs:string" name="ProtectInMemory"
+											use="optional" />
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AutoType">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element type="xs:string" name="Enabled" />
+						<xs:element type="xs:byte" name="DataTransferObfuscation" />
+						<xs:element type="xs:string" name="DefaultSequence"
+							minOccurs="0" />
+						<xs:element name="Association" maxOccurs="unbounded"
+							minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element type="xs:string" name="Window" />
+									<xs:element type="xs:string" name="KeystrokeSequence" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="History">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element type="Entry" name="Entry" maxOccurs="unbounded"
+							minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Times">
+		<xs:sequence>
+			<xs:element type="xs:dateTime" name="CreationTime" />
+			<xs:element type="xs:dateTime" name="LastModificationTime" />
+			<xs:element type="xs:dateTime" name="LastAccessTime" />
+			<xs:element type="xs:dateTime" name="ExpiryTime" />
+			<xs:element type="xs:string" name="Expires" />
+			<xs:element type="xs:short" name="UsageCount" />
+			<xs:element type="xs:dateTime" name="LocationChanged" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
